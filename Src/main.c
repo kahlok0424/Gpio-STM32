@@ -42,7 +42,9 @@
 /* USER CODE BEGIN Includes */
 #include "GPIO.h"
 #include "Rcc.h"
+#include "RNG.h"
 #include <stdio.h>
+#include "NVIC.h"
 #define red_led     14
 #define green_led   13
 #define blue_button 0
@@ -97,6 +99,7 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
+  enableRNG();
   enableGpioA();
   enableGpioG();
   gpioConfig(GpioA,blue_button,GPIO_MODE_IN,0,GPIO_PUPD_NO_PULL,0);
@@ -104,9 +107,13 @@ int main(void)
   gpioLock(GpioG,red_led);
   gpioConfig(GpioG,green_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioLock(GpioG,green_led);
+  int i = 0;
 
   /* USER CODE END 2 */
   printf("Hello World!\n");
+  nvicEnableIrq(80);
+  nvicSetPriority(80,4);
+  getRandomNumberByInterrupt();
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -114,6 +121,10 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+//	  int num = getRandomNumber();
+//	  printf("(%d) 0x%d\n",i++,num);
+
+
 	volatile int blue_button_state;
 
     gpioWrite(GpioG,red_led,1);
@@ -215,6 +226,9 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HASH_RNG_IRQHandler(void){
+	volatile int rand = RNG->DR;
+}
 
 /* USER CODE END 4 */
 

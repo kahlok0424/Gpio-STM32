@@ -30,3 +30,17 @@ void enableGpioC(){
 	//enable gpioG clock
 	*rccAhb1En |= (1<<1);
 }
+
+void enableGpio(int Gpiox){
+	//un-reset gpioG
+	rcc->AHB1RSTR &= ~(1<<6);
+	//enable gpioG clock
+	rcc->AHB1ENR |= 1<<6;
+}
+
+void enableRNG(void){
+	//un-reset RNG
+    rcc->AHB2RSTR &= ~(1 << 6);
+    //Start clock of RNG
+    rcc->AHB2ENR |= (1<<6);
+}

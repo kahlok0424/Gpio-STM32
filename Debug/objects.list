@@ -13,6 +13,8 @@
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o"
 "Src/GPIO.o"
+"Src/NVIC.o"
+"Src/RNG.o"
 "Src/Rcc.o"
 "Src/main.o"
 "Src/stm32f4xx_hal_msp.o"
