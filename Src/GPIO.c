@@ -43,3 +43,16 @@ void gpioLock(GpioReg *gpio,int pin){
 	lockState = gpio->lock;
 
 }
+
+void gpioAlfConfig(GpioReg *gpio,int pin,int func){
+	if(pin>7){
+		gpio->altFuncHi &= ~(0xf << (pin*4));
+		gpio->altFuncHi |= (func<<(pin*4));
+	}
+	else{
+		gpio->altFuncLo &= ~(0xf << (pin*4));
+	    gpio->altFuncLo |= (func<<(pin*4));
+	}
+}
+
+

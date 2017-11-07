@@ -42,7 +42,8 @@ struct SyscfgReg{
 
 #define extiIntrMaskEnable(pin)            (Exti->IMR |= (1 << pin))
 #define extiIntrMaskDisable(pin)           (Exti->IMR &= ~(1 << pin))
-#define extiEventMaskEnable(pin)           (Exti->EMR &= ~(1 << pin))
+#define extiEventMaskEnable(pin)           (Exti->EMR |= (1 << pin))
+#define extiEventMaskDisable(pin)          (Exti->EMR &= ~(1 << pin))
 #define extiEnableRisingTrigger(pin)       (Exti->RTSR |= (1 << pin))
 #define extiDisableRisingTrigger(pin)      (Exti->RTSR &= ~(1 << pin))
 #define extiEnableFallingTrigger(pin)      (Exti->FTSR |= (1 << pin))

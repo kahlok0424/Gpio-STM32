@@ -59,4 +59,25 @@ struct RccReg{
 	volatile uint32_t PLLI2SCFGR;    //84h
 };
 
+#define MCO_HSI_SRC        0
+#define MCO_LSE_SRC        1
+#define MCO_HSE_SRC        2
+#define MCO_PLL_SRC        3
+
+#define MCO_DIV_NO_DIV     0
+#define MCO_DIV_BY_2       4
+#define MCO_DIV_BY_3       5
+#define MCO_DIV_BY_4       6
+#define MCO_DIV_BY_5       7
+
+#define rccSelectMco1Src(x)       {                                \
+                                    (rcc->CFGR &= ~(3<<21));       \
+                                    (rcc->CFGR |= (x<<21));        \
+                                  }
+
+#define rccMCo1Prescaler(x)       {                                \
+	                                (rcc->CFGR &= ~(7<<24));       \
+	                                (rcc->CFGR |= (x<<24));        \
+                                  }
+
 #endif /* RCC_H_ */

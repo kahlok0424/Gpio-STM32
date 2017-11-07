@@ -102,10 +102,10 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
-  enableRNG();
+
   enableGpioA();
   enableGpioG();
-  gpioConfig(GpioA,blue_button,GPIO_MODE_IN,0,GPIO_PUPD_NO_PULL,0);
+  //gpioConfig(GpioA,blue_button,GPIO_MODE_IN,0,GPIO_PUPD_NO_PULL,0);
   gpioConfig(GpioG,red_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioLock(GpioG,red_led);
   gpioConfig(GpioG,green_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
@@ -115,17 +115,21 @@ int main(void)
   printf("Hello World!\n");
 
 /*
-  //enable I2C event interrupt
+  enable I2C event interrupt
   nvicEnableIrq(31);
   nvicSetPriority(31,8);
-  //disable I2C event interrupt
+  disable I2C event interrupt
   nvicDisableIrq(31);
 */
 
-  //enable RNG interrupt
-  //nvicEnableIrq(80);
-  //nvicSetPriority(80,4);
-  //getRandomNumberByInterrupt();
+  //RNG
+/*
+  enableRNG();
+  enable RNG interrupt
+  nvicEnableIrq(80);
+  nvicSetPriority(80,4);
+  getRandomNumberByInterrupt();
+*/
 
   //systick
   /*sysTickPrescaledSpeed();
@@ -135,11 +139,19 @@ int main(void)
   sysTickIntrEnable();*/
 
   //external interrupt
+  sysTickDisable();
   nvicEnableIrq(6);
   nvicSetPriority(6,9);
   extiIntrMaskEnable(blue_button);
   extiDisableFallingTrigger(blue_button);
   extiEnableRisingTrigger(blue_button);
+
+  //rcc clock output
+  gpioConfig(GpioA,8,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_VERY_HIGH);
+  gpioAlfConfig(GpioA , 8 ,AF0);
+  rccSelectMco1Src(MCO_HSE_SRC);
+  rccMCo1Prescaler(MCO_DIV_BY_5);
+
   /* USER CODE END 2 */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -150,12 +162,16 @@ int main(void)
   /* USER CODE BEGIN 3 */
 //	  int num = getRandomNumber();
 //	  printf("(%d) 0x%d\n",i++,num);
+	  __WFI();
     printf("%d\n",buttonPress);
-    //while(!sysTickHasExpired());
-   // gpioWrite(GpioG,red_led,1);
-    //while(!sysTickHasExpired());
-   // gpioWrite(GpioG,red_led,0);
 
+    //blink using systick
+    /*while(!sysTickHasExpired());
+    gpioWrite(GpioG,red_led,1);
+    while(!sysTickHasExpired());
+    gpioWrite(GpioG,red_led,0);*/
+
+    //blink
 /*	volatile int blue_button_state;
 
     gpioWrite(GpioG,red_led,1);

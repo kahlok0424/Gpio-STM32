@@ -53,8 +53,8 @@ struct GpioReg{
 //GPIO MODE
 #define GPIO_MODE_IN       0
 #define GPIO_MODE_OUT      1
-#define GPIO_MODEG_AF      2
-#define GPIO_MODEG_AN      3
+#define GPIO_MODE_AF      2
+#define GPIO_MODE_AN      3
 
 //GPIO SPEED
 #define GPIO_SPD_LOW        0
@@ -72,12 +72,33 @@ struct GpioReg{
 #define GPIO_PUPD_PULL_DOWN   2
 #define GPIO_PUPD_RESERVE     3
 
-#define SET_PIN(gpio,pinNum)    gpio->BSRR = (1<<pinNum)
-#define RESET_PIN(gpio,pinNum)  gpio->BSRR = (1<<(16+pinNum))
+//GPIO alternate function
+#define AF0      0x0000
+#define AF1      0x0001
+#define AF2      0x0010
+#define AF3      0x0011
+#define AF4      0x0100
+#define AF5      0x0101
+#define AF6      0x0110
+#define AF7      0x0111
+#define AF8      0x1000
+#define AF9      0x1001
+#define AFa      0x1010
+#define AFb      0x1011
+#define AFc      0x1100
+#define AFd      0x1101
+#define AFe      0x1110
+#define AFf      0x1111
+
+
+#define SET_PIN(gpio,pinNum)            gpio->BSRR = (1<<pinNum)
+#define RESET_PIN(gpio,pinNum)          gpio->BSRR = (1<<(16+pinNum))
 
 void gpioConfig(GpioReg *gpio,int pin ,int mode ,int outDriveType, int pullType , int speed);
 void gpioWrite(GpioReg *gpio,int pin,int state);
 int gpioRead(GpioReg *gpio, int pin);
 void gpioLock(GpioReg *gpio,int pin);
+void gpioAlfConfig(GpioReg *gpio,int pin,int func);
+
 
 #endif /* GPIO_H_ */
