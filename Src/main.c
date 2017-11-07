@@ -45,6 +45,8 @@
 #include "RNG.h"
 #include <stdio.h>
 #include "NVIC.h"
+#include "SysTick.h"
+#include "EXTI.h"
 #define red_led     14
 #define green_led   13
 #define blue_button 0
@@ -55,6 +57,7 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
+int buttonPress =0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,13 +110,37 @@ int main(void)
   gpioLock(GpioG,red_led);
   gpioConfig(GpioG,green_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioLock(GpioG,green_led);
-  int i = 0;
+  //int i = 0;
 
-  /* USER CODE END 2 */
   printf("Hello World!\n");
-  nvicEnableIrq(80);
-  nvicSetPriority(80,4);
-  getRandomNumberByInterrupt();
+
+/*
+  //enable I2C event interrupt
+  nvicEnableIrq(31);
+  nvicSetPriority(31,8);
+  //disable I2C event interrupt
+  nvicDisableIrq(31);
+*/
+
+  //enable RNG interrupt
+  //nvicEnableIrq(80);
+  //nvicSetPriority(80,4);
+  //getRandomNumberByInterrupt();
+
+  //systick
+  /*sysTickPrescaledSpeed();
+  sysTickReload(11250000);
+  sysTickClearCounter();
+  sysTickEnable();
+  sysTickIntrEnable();*/
+
+  //external interrupt
+  nvicEnableIrq(6);
+  nvicSetPriority(6,9);
+  extiIntrMaskEnable(blue_button);
+  extiDisableFallingTrigger(blue_button);
+  extiEnableRisingTrigger(blue_button);
+  /* USER CODE END 2 */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -123,9 +150,13 @@ int main(void)
   /* USER CODE BEGIN 3 */
 //	  int num = getRandomNumber();
 //	  printf("(%d) 0x%d\n",i++,num);
+    printf("%d\n",buttonPress);
+    //while(!sysTickHasExpired());
+   // gpioWrite(GpioG,red_led,1);
+    //while(!sysTickHasExpired());
+   // gpioWrite(GpioG,red_led,0);
 
-
-	volatile int blue_button_state;
+/*	volatile int blue_button_state;
 
     gpioWrite(GpioG,red_led,1);
 	HAL_Delay(300);
@@ -141,7 +172,7 @@ int main(void)
 	}else{
 		//gpioWrite(GpioG,green_led,0);
 		RESET_PIN(GpioG,green_led);
-	}
+	}*/
   }
   /* USER CODE END 3 */
 
@@ -226,6 +257,18 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void EXTI0_IRQHandler(void){
+	resetPending(blue_button);
+	buttonPress++;
+}
+
+void My_SysTick_Handler(void){
+	static int led_state =0;
+	//just do nothing but reading the CTRL register to clear the counterflag
+	volatile int flags = SysTicker->CTRL;
+	gpioWrite(GpioG,red_led, (led_state = !led_state));
+}
+
 void HASH_RNG_IRQHandler(void){
 	volatile int rand = RNG->DR;
 }
