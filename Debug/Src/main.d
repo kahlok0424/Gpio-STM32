@@ -30,7 +30,9 @@ Src/main.o: ../Src/main.c \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/RNG.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/NVIC.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/SysTick.h \
- C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/EXTI.h
+ C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/EXTI.h \
+ C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/Timer.h \
+ C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/DbgMcu.h
 
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/main.h:
 
@@ -95,3 +97,7 @@ C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/NVIC.h:
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/SysTick.h:
 
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/EXTI.h:
+
+C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/Timer.h:
+
+C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/DbgMcu.h:

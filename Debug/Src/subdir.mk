@@ -8,6 +8,7 @@ C_SRCS += \
 ../Src/NVIC.c \
 ../Src/RNG.c \
 ../Src/Rcc.c \
+../Src/Timer.c \
 ../Src/main.c \
 ../Src/stm32f4xx_hal_msp.c \
 ../Src/stm32f4xx_it.c \
@@ -18,6 +19,7 @@ OBJS += \
 ./Src/NVIC.o \
 ./Src/RNG.o \
 ./Src/Rcc.o \
+./Src/Timer.o \
 ./Src/main.o \
 ./Src/stm32f4xx_hal_msp.o \
 ./Src/stm32f4xx_it.o \
@@ -28,6 +30,7 @@ C_DEPS += \
 ./Src/NVIC.d \
 ./Src/RNG.d \
 ./Src/Rcc.d \
+./Src/Timer.d \
 ./Src/main.d \
 ./Src/stm32f4xx_hal_msp.d \
 ./Src/stm32f4xx_it.d \

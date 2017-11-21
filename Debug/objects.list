@@ -16,6 +16,7 @@
 "Src/NVIC.o"
 "Src/RNG.o"
 "Src/Rcc.o"
+"Src/Timer.o"
 "Src/main.o"
 "Src/stm32f4xx_hal_msp.o"
 "Src/stm32f4xx_it.o"

@@ -10,6 +10,11 @@
 uint32_t *rccAhb1Rst = (uint32_t *)(RCC_BASE_ADR + RCC_AHB1RST_OFF);
 uint32_t *rccAhb1En = (uint32_t *)(RCC_BASE_ADR + RCC_AHB1EN_OFF);
 
+void enableTimer8(){
+	rcc->APB2ENR |= (1<<1);
+	rcc->APB2RSTR &= ~(1<<1);
+}
+
 void enableGpioG(){
 	//un-reset gpioG
 	*rccAhb1Rst &= ~(1<<6);

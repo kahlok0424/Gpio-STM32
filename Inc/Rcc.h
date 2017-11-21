@@ -24,6 +24,7 @@ void enableGpioA(void);
 void enableGpioB(void);
 void enableGpio(int Gpiox);
 void enableRNG(void);
+void enableTimer8();
 
 typedef struct RccReg RccReg;
 struct RccReg{

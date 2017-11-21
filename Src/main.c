@@ -47,6 +47,8 @@
 #include "NVIC.h"
 #include "SysTick.h"
 #include "EXTI.h"
+#include "Timer.h"
+#include "DbgMcu.h"
 #define red_led     14
 #define green_led   13
 #define blue_button 0
@@ -63,7 +65,6 @@ int buttonPress =0;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-
 
 /* USER CODE BEGIN PFP */
 extern void initialise_monitor_handles(void);
@@ -102,7 +103,6 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
-
   enableGpioA();
   enableGpioG();
   //gpioConfig(GpioA,blue_button,GPIO_MODE_IN,0,GPIO_PUPD_NO_PULL,0);
@@ -110,9 +110,12 @@ int main(void)
   gpioLock(GpioG,red_led);
   gpioConfig(GpioG,green_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioLock(GpioG,green_led);
-  //int i = 0;
 
-  printf("Hello World!\n");
+  volatile uint32_t test =1;
+  //printf("Hello World!\n");
+  initTimer8(5000,17999);
+  //haltTimer8onDebug();
+  runTimer8onDebug();
 
 /*
   enable I2C event interrupt
@@ -139,31 +142,36 @@ int main(void)
   sysTickIntrEnable();*/
 
   //external interrupt
-  sysTickDisable();
+  /*sysTickDisable();
   nvicEnableIrq(6);
   nvicSetPriority(6,9);
   extiIntrMaskEnable(blue_button);
   extiDisableFallingTrigger(blue_button);
-  extiEnableRisingTrigger(blue_button);
+  extiEnableRisingTrigger(blue_button);*/
 
   //rcc clock output
-  gpioConfig(GpioA,8,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_VERY_HIGH);
+  /*gpioConfig(GpioA,8,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_VERY_HIGH);
   gpioAlfConfig(GpioA , 8 ,AF0);
   rccSelectMco1Src(MCO_HSE_SRC);
-  rccMCo1Prescaler(MCO_DIV_BY_5);
+  rccMCo1Prescaler(MCO_DIV_BY_5);*/
 
   /* USER CODE END 2 */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  gpioWrite(GpioG,red_led,1);
+	  wait500ms();
+	  gpioWrite(GpioG,red_led,0);
+	  wait500ms();
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
 //	  int num = getRandomNumber();
 //	  printf("(%d) 0x%d\n",i++,num);
-	  __WFI();
-    printf("%d\n",buttonPress);
+	  //__WFI();
+    //printf("%d\n",buttonPress)
 
     //blink using systick
     /*while(!sysTickHasExpired());
@@ -287,6 +295,11 @@ void My_SysTick_Handler(void){
 
 void HASH_RNG_IRQHandler(void){
 	volatile int rand = RNG->DR;
+}
+
+void wait500ms(void){
+	while(!(timer8->SR & 1));
+	timer8->SR &= ~1;
 }
 
 /* USER CODE END 4 */
