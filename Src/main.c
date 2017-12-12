@@ -49,9 +49,13 @@
 #include "EXTI.h"
 #include "Timer.h"
 #include "DbgMcu.h"
+#include "I2C.h"
+#include "Flash.h"
+#include "USART.h"
 #define red_led     14
 #define green_led   13
 #define blue_button 0
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -103,19 +107,38 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
+  //gpio config for usart
+  //enableRcc();
   enableGpioA();
-  enableGpioG();
-  //gpioConfig(GpioA,blue_button,GPIO_MODE_IN,0,GPIO_PUPD_NO_PULL,0);
+  gpioConfig(GpioA,9,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
+  gpioConfig(GpioA,10,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
+  gpioConfig(GpioA,6,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
+  gpioAlfConfig(GpioA , 9 ,AF7);
+  gpioAlfConfig(GpioA , 10 ,AF7);
+
+  //usart config
+  enableUSART1();
+  MbitSelect9();
+  usartStopBitSelect2();
+  usartBaudConfig(OVER16, 0x30,0xd);
+  usartParityConfig(1,ODD);
+  usartEnable();
+  usartTransmitDisable();
+  usartReceiveEnable();
+
+  //other exercise
+  /*enableGpioG();
+  enableGpioC();
+  enableGpio(GpioF);
+  gpioConfig(GpioA,blue_button,GPIO_MODE_IN,0,GPIO_PUPD_NO_PULL,0);
   gpioConfig(GpioG,red_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioLock(GpioG,red_led);
   gpioConfig(GpioG,green_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioLock(GpioG,green_led);
-
-  volatile uint32_t test =1;
-  //printf("Hello World!\n");
-  initTimer8(5000,17999);
+  */
+  //initTimer8(5000,17999);
   //haltTimer8onDebug();
-  runTimer8onDebug();
+  //runTimer8onDebug();
 
 /*
   enable I2C event interrupt
@@ -155,16 +178,29 @@ int main(void)
   rccSelectMco1Src(MCO_HSE_SRC);
   rccMCo1Prescaler(MCO_DIV_BY_5);*/
 
+  //enable i2c
+  /*initI2C3();
+  initI2C2(0x1f);
+  i2c3->CR1 |= (1<<0); //enable peripheral
+  i2c3->CR1 |= (1<<8);*/
+
+  char data[256];
+  //usartReceive(data);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  gpioWrite(GpioG,red_led,1);
-	  wait500ms();
-	  gpioWrite(GpioG,red_led,0);
-	  wait500ms();
+	  //usartReceive(data);
+	  //*data = usartGetData();
+	  usartReceive(&data);
+	  //printf("%c\n",data);
+	  //usartTransmit("j",1);
+	  //usartTransmit("KL",2);
+	  //usartTransmit("HELLO WOLRD!\n",14);
+
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -293,9 +329,10 @@ void My_SysTick_Handler(void){
 	gpioWrite(GpioG,red_led, (led_state = !led_state));
 }
 
-void HASH_RNG_IRQHandler(void){
+//Enable this for RNG
+/*void HASH_RNG_IRQHandler(void){
 	volatile int rand = RNG->DR;
-}
+}*/
 
 void wait500ms(void){
 	while(!(timer8->SR & 1));

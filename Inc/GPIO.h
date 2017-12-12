@@ -80,7 +80,7 @@ struct GpioReg{
 #define AF4      0x0100
 #define AF5      0x0101
 #define AF6      0x0110
-#define AF7      0x0111
+#define AF7      7
 #define AF8      0x1000
 #define AF9      0x1001
 #define AFa      0x1010
@@ -99,6 +99,7 @@ void gpioWrite(GpioReg *gpio,int pin,int state);
 int gpioRead(GpioReg *gpio, int pin);
 void gpioLock(GpioReg *gpio,int pin);
 void gpioAlfConfig(GpioReg *gpio,int pin,int func);
+void gpioConfigAltFuncNum(GpioReg *Gpio,int pin,int func);
 
 
 #endif /* GPIO_H_ */

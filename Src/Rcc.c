@@ -15,6 +15,11 @@ void enableTimer8(){
 	rcc->APB2RSTR &= ~(1<<1);
 }
 
+void enableI2C(int value){
+	rcc->APB1ENR |= (1<< (20+value));
+	rcc->APB2RSTR &= ~(1<< (20+value));
+}
+
 void enableGpioG(){
 	//un-reset gpioG
 	*rccAhb1Rst &= ~(1<<6);
@@ -48,4 +53,9 @@ void enableRNG(void){
     rcc->AHB2RSTR &= ~(1 << 6);
     //Start clock of RNG
     rcc->AHB2ENR |= (1<<6);
+}
+
+void enableUSART1(void){
+	rcc->APB2RSTR &= ~(1<<4);
+	rcc->APB2ENR |= 1<<4;
 }
