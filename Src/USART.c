@@ -5,6 +5,18 @@
  *      Author: user1
  */
 
+/**
+ * The connection between UART1 pins on STM32F429Zi
+ *
+ * STM32F429ZI  | CH340
+ * Name  Pin    | Name
+ * --------------------
+ * Tx    PA9    | Rx
+ * Rx    PA10   | Tx
+ * GND   GND    | GND
+ * --------------------
+ */
+
 #include<stdint.h>
 #include "USART.h"
 

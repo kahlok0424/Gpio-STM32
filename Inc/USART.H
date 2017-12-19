@@ -48,8 +48,9 @@ struct UsartReg{
 #define usartTransmitDisable()	(usart1->CR1 &= ~(TxEn))
 #define usartReceiveEnable()	(usart1->CR1 |= RxEn)
 #define usartReceiveDisable()	(usart1->CR1 &= ~(RxEn))
+#define DMATransmitEN			(1<<7)
 
-
+#define uart1EnableDmaTx()		(usart1->CR3 |= DMATransmitEN)
 void usartParityConfig(int en,int odd);
 void usartBaudConfig(int overSampling, int mantissa,int fraction);
 void usartSend(uint8_t *data);

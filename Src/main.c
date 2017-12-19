@@ -52,6 +52,7 @@
 #include "I2C.h"
 #include "Flash.h"
 #include "USART.h"
+#include "DMA.h"
 #define red_led     14
 #define green_led   13
 #define blue_button 0
@@ -108,7 +109,6 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   //gpio config for usart
-  //enableRcc();
   enableGpioA();
   gpioConfig(GpioA,9,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioConfig(GpioA,10,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
@@ -116,15 +116,24 @@ int main(void)
   gpioAlfConfig(GpioA , 9 ,AF7);
   gpioAlfConfig(GpioA , 10 ,AF7);
 
-  //usart config
+  //dma
   enableUSART1();
+  usartTransmitEnable();
+  uart1EnableDmaTx();
+  enableDMA(DMA2_DEV);
+  dmaInitForUsart1();
+
+  //usart config
+
   MbitSelect9();
   usartStopBitSelect2();
   usartBaudConfig(OVER16, 0x30,0xd);
   usartParityConfig(1,ODD);
+
   usartEnable();
-  usartTransmitDisable();
+  //usartTransmitDisable();
   usartReceiveEnable();
+  char *data = (char *)malloc(sizeof(char)*256);
 
   //other exercise
   /*enableGpioG();
@@ -135,10 +144,11 @@ int main(void)
   gpioLock(GpioG,red_led);
   gpioConfig(GpioG,green_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioLock(GpioG,green_led);
+
+  initTimer8(5000,17999);
+  haltTimer8onDebug();
+  runTimer8onDebug();
   */
-  //initTimer8(5000,17999);
-  //haltTimer8onDebug();
-  //runTimer8onDebug();
 
 /*
   enable I2C event interrupt
@@ -184,30 +194,24 @@ int main(void)
   i2c3->CR1 |= (1<<0); //enable peripheral
   i2c3->CR1 |= (1<<8);*/
 
-  char data[256];
-  //usartReceive(data);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //usartReceive(data);
-	  //*data = usartGetData();
+	  //usart transmit and receive
+	  /*usartReceive(data);
+	  *data = usartGetData();
 	  usartReceive(&data);
-	  //printf("%c\n",data);
-	  //usartTransmit("j",1);
-	  //usartTransmit("KL",2);
-	  //usartTransmit("HELLO WOLRD!\n",14);
+	  printf("%c\n",data);
+	  usartTransmit("j",1);
+	  usartTransmit("KL",2);
+	  usartTransmit("HELLO WOLRD!\n",14);*/
 
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-//	  int num = getRandomNumber();
-//	  printf("(%d) 0x%d\n",i++,num);
-	  //__WFI();
-    //printf("%d\n",buttonPress)
 
     //blink using systick
     /*while(!sysTickHasExpired());

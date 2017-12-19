@@ -59,3 +59,8 @@ void enableUSART1(void){
 	rcc->APB2RSTR &= ~(1<<4);
 	rcc->APB2ENR |= 1<<4;
 }
+
+void enableDMA(int dmaBitNumber){
+	rcc->AHB1RSTR &= ~(1<< dmaBitNumber);
+	rcc->AHB1ENR |= 1<< dmaBitNumber;
+}

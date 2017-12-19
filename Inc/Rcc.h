@@ -9,6 +9,7 @@
 #define RCC_H_
 
 #include <stdint.h>
+#include "Common.h"
 
 #define RCC_BASE_ADR        0x40023800
 #define RCC_AHB1RST_OFF     0x10
@@ -28,6 +29,11 @@ void enableRNG(void);
 void enableTimer8();
 void enableI2C(int value);
 void enableUSART1(void);
+void enableDMA(int dmaBitNumber);
+
+//DMA
+#define DMA1_DEV	21
+#define DMA2_DEV	22
 
 typedef struct RccReg RccReg;
 struct RccReg{

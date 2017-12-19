@@ -27,6 +27,7 @@ Src/main.o: ../Src/main.c \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/GPIO.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/Rcc.h \
+ C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/Common.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/RNG.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/NVIC.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/SysTick.h \
@@ -36,6 +37,8 @@ Src/main.o: ../Src/main.c \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/I2C.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/Flash.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/rcc.h \
+ C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/USART.h \
+ C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/DMA.h \
  C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/USART.h
 
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/main.h:
@@ -94,6 +97,8 @@ C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/GPIO.h:
 
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/Rcc.h:
 
+C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/Common.h:
+
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/RNG.h:
 
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/NVIC.h:
@@ -111,5 +116,9 @@ C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/I2C.h:
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/Flash.h:
 
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/rcc.h:
+
+C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/USART.h:
+
+C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/DMA.h:
 
 C:/Users/user1/Desktop/KL/STM32-Peripheral/GPIO/Inc/USART.h:
