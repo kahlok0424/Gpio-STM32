@@ -113,8 +113,9 @@ int main(void)
   enableGpioC();
   gpioConfig(GpioC,6,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_VERY_HIGH);
   gpioConfigAltFuncNum(GpioC,6,AF3);
-  //initTimer8Chn1;
   configureTimer8();
+  enableDMA(DMA2_DEV);
+  dmaInitForTimer8("test");
 
   //gpio config for usart
   /*enableGpioA();

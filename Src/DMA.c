@@ -37,11 +37,11 @@ void dmaInitForUsart1(char *str){
 	//char *str = "hello";
 
 	dma2->s[2].CR &= ~(StreamEN);
-	dma2->s[2].CR = DMAFlowControl | MemoryPointerIn | PSIZE_ONEBYTE | MSIZE_onebyte | HighPrio | channel_4 | MBURST_INCR8;
+	dma2->s[2].CR = DMAFlowControl | MemoryPointerIn | PDATA_SIZE_8 | MDATA_SIZE_8 | HighPrio | channel_4 | MBURST_INCR8;
 	dma2->s[2].FCR = FIFO_HALF;
 	dma2->s[2].CR |= Peripheral_To_Memory;
 	dma2->s[7].CR &= ~(StreamEN);
-	dma2->s[7].CR = DMAFlowControl | MemoryPointerIn | PSIZE_ONEBYTE | MSIZE_onebyte | HighPrio | channel_4 | MBURST_INCR8;
+	dma2->s[7].CR = DMAFlowControl | MemoryPointerIn | PDATA_SIZE_8 | MDATA_SIZE_8 | HighPrio | channel_4 | MBURST_INCR8;
 	dma2->s[7].FCR = FIFO_HALF;
 	dma2->s[7].CR |= Memory_To_Peripheral;
 	dma2->s[2].PAR = &(usart1->DR);
@@ -74,8 +74,23 @@ int dmaStreamCheckFlag(DmaReg *dma , int streamNum , int flag){
 void dmaSetAddressAndSize(uint32_t memoryAddr ,uint32_t peripheralAddr,uint32_t size){
 
 }
+}
+void dmaInitForTimer8(char *str){
 
-void dmaUsart1SendByte(char *str){
+	dma2->s[2].CR &= ~(StreamEN);
+	dma2->s[2].CR = DMAFlowControl | MemoryPointerIn | PDATA_SIZE_16 | MDATA_SIZE_16 | VHPrio | channel_1 |     \
+					MBURST_INCR4 | NO_PINC | PBURST_SINGLE;
+	dma2->s[2].FCR = FIFO_HALF;
+	dma2->s[7].CR &= ~(StreamEN);
+	dma2->s[7].CR = DMAFlowControl | MemoryPointerIn | PDATA_SIZE_16 | MDATA_SIZE_16 | HighPrio | channel_4 | MBURST_INCR8;
+	dma2->s[7].FCR = FIFO_HALF;
+	dma2->s[7].CR |= Memory_To_Peripheral;
+
 	dma2->s[2].M0AR = str;
 	dma2->s[7].M0AR = str;
+
+	dma2->s[7].NDTR = 5;
+
+	dma2->s[2].CR |= StreamEN;
+	dma2->s[7].CR |= StreamEN;
 }

@@ -63,10 +63,20 @@ struct DmaReg{
 #define MediumPrio		(1<<17)
 #define HighPrio		(1<<17)
 #define VHPrio			(3<<16)
+#define NO_PINC			(0<<9)
+#define PINC			(1<<9)
+
+//P Burst
+#define PBURST_SINGLE	(0<<21)
+#define PBURST_INCR4	(1<<21)
+#define PBURST_INCR8	(2<<21)
+#define PBURST_INCR16	(3<<21)
+
+//M burst
 #define MBURST_SINGLE	(0<<23)
 #define MBURST_INCR4	(1<<23)
-#define MBURST_INCR8	(1<<24)
-#define MBURST_INCR16	(3<<24)
+#define MBURST_INCR8	(2<<23)
+#define MBURST_INCR16	(3<<23)
 
 //Data Transfer Direction
 #define Peripheral_To_Memory	(0<<6)
@@ -84,18 +94,19 @@ struct DmaReg{
 #define channel_7	(7<<27)
 
 
-//PSIZE
-#define PSIZE_ONEBYTE	(0<<12)
-#define PSIZE_HALFWORD	(1<<12)
-#define PSIZE_WORD		(2<<12)
+//Peripheral data size
+#define PDATA_SIZE_8	(0<<11)
+#define PDATA_SIZE_16	(1<<11)
+#define PDATA_SIZE_32	(2<<11)
 
-//MSIZE
-#define MSIZE_onebyte		(0<<14)
-#define MSIZE_halfword	(1<<14)
-#define MSIZE_word		(2<<14)
+//Memory data size
+#define MDATA_SIZE_8		(0<<13)
+#define MDATA_SIZE_16		(1<<13)
+#define MDATA_SIZE_32		(2<<13)
 
 
 void dmaInitForUsart1(char *str);
+void dmaInitForTimer8(char *str);
 int dmaStreamCheckFlag(DmaReg *dma , int streamNum , int flag);
 void dmaUsart1SendByte(char *str);
 
