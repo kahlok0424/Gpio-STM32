@@ -73,22 +73,22 @@ struct GpioReg{
 #define GPIO_PUPD_RESERVE     3
 
 //GPIO alternate function
-#define AF0      0x0000
-#define AF1      0x0001
-#define AF2      0x0010
-#define AF3      0x0011
-#define AF4      0x0100
-#define AF5      0x0101
-#define AF6      0x0110
+#define AF0		 0
+#define AF1      1
+#define AF2      2
+#define AF3      3
+#define AF4      4
+#define AF5      5
+#define AF6      6
 #define AF7      7
-#define AF8      0x1000
-#define AF9      0x1001
-#define AFa      0x1010
-#define AFb      0x1011
-#define AFc      0x1100
-#define AFd      0x1101
-#define AFe      0x1110
-#define AFf      0x1111
+#define AF8      8
+#define AF9      9
+#define AFa      10
+#define AFb      11
+#define AFc      12
+#define AFd      13
+#define AFe      14
+#define AFf      15
 
 
 #define SET_PIN(gpio,pinNum)            gpio->BSRR = (1<<pinNum)

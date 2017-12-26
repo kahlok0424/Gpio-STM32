@@ -33,8 +33,8 @@
  *
  */
 
-void dmaInitForUsart1(){
-	char *str = "hello";
+void dmaInitForUsart1(char *str){
+	//char *str = "hello";
 
 	dma2->s[2].CR &= ~(StreamEN);
 	dma2->s[2].CR = DMAFlowControl | MemoryPointerIn | PSIZE_ONEBYTE | MSIZE_onebyte | HighPrio | channel_4 | MBURST_INCR8;
@@ -75,3 +75,7 @@ void dmaSetAddressAndSize(uint32_t memoryAddr ,uint32_t peripheralAddr,uint32_t 
 
 }
 
+void dmaUsart1SendByte(char *str){
+	dma2->s[2].M0AR = str;
+	dma2->s[7].M0AR = str;
+}

@@ -26,7 +26,7 @@ void enableGpioB(void);
 void enableGpioC(void);
 void enableGpio(int Gpiox);
 void enableRNG(void);
-void enableTimer8();
+void enableTimer8(void);
 void enableI2C(int value);
 void enableUSART1(void);
 void enableDMA(int dmaBitNumber);

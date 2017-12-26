@@ -51,6 +51,7 @@ struct UsartReg{
 #define DMATransmitEN			(1<<7)
 
 #define uart1EnableDmaTx()		(usart1->CR3 |= DMATransmitEN)
+
 void usartParityConfig(int en,int odd);
 void usartBaudConfig(int overSampling, int mantissa,int fraction);
 void usartSend(uint8_t *data);
@@ -58,5 +59,6 @@ void usartStopBitSelect2();
 void usartTransmit(uint8_t *data,int size);
 uint8_t usartGetData();
 void usartReceive(char *data);
+void serialPrint(char *format,...);
 
 #endif /* USART_H_ */

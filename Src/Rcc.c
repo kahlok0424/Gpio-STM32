@@ -10,7 +10,7 @@
 uint32_t *rccAhb1Rst = (uint32_t *)(RCC_BASE_ADR + RCC_AHB1RST_OFF);
 uint32_t *rccAhb1En = (uint32_t *)(RCC_BASE_ADR + RCC_AHB1EN_OFF);
 
-void enableTimer8(){
+void enableTimer8(void){
 	rcc->APB2ENR |= (1<<1);
 	rcc->APB2RSTR &= ~(1<<1);
 }
@@ -36,9 +36,9 @@ void enableGpioA(){
 
 void enableGpioC(){
 	//un-reset gpioG
-	*rccAhb1Rst &= ~(1<<1);
+	*rccAhb1Rst &= ~(1<<2);
 	//enable gpioG clock
-	*rccAhb1En |= (1<<1);
+	*rccAhb1En |= (1<<2);
 }
 
 void enableGpio(int Gpiox){

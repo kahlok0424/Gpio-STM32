@@ -95,7 +95,8 @@ struct DmaReg{
 #define MSIZE_word		(2<<14)
 
 
-void dmaInitForUsart1();
+void dmaInitForUsart1(char *str);
 int dmaStreamCheckFlag(DmaReg *dma , int streamNum , int flag);
+void dmaUsart1SendByte(char *str);
 
 #endif /* DMA_H_ */

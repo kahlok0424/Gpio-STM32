@@ -108,32 +108,41 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
+
+  //Output compare input capture
+  enableGpioC();
+  gpioConfig(GpioC,6,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_VERY_HIGH);
+  gpioConfigAltFuncNum(GpioC,6,AF3);
+  //initTimer8Chn1;
+  configureTimer8();
+
   //gpio config for usart
-  enableGpioA();
+  /*enableGpioA();
   gpioConfig(GpioA,9,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioConfig(GpioA,10,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioConfig(GpioA,6,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
   gpioAlfConfig(GpioA , 9 ,AF7);
-  gpioAlfConfig(GpioA , 10 ,AF7);
+  gpioAlfConfig(GpioA , 10 ,AF7);*/
 
   //dma
-  enableUSART1();
+  /*enableUSART1();
   usartTransmitEnable();
   uart1EnableDmaTx();
   enableDMA(DMA2_DEV);
-  dmaInitForUsart1();
+  dmaInitForUsart1("silver");*/
 
   //usart config
-
-  MbitSelect9();
+  /*MbitSelect9();
   usartStopBitSelect2();
   usartBaudConfig(OVER16, 0x30,0xd);
   usartParityConfig(1,ODD);
 
   usartEnable();
   //usartTransmitDisable();
-  usartReceiveEnable();
-  char *data = (char *)malloc(sizeof(char)*256);
+  //usartReceiveEnable();
+  serialPrint("Value : %d %s",123,"Hello,bambi");
+  usartTransmit("Crow",4);
+  char *data = (char *)malloc(sizeof(char)*256);*/
 
   //other exercise
   /*enableGpioG();
@@ -200,13 +209,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  toggleOutCompareChannel1WithForce();
+
 	  //usart transmit and receive
 	  /*usartReceive(data);
 	  *data = usartGetData();
 	  usartReceive(&data);
 	  printf("%c\n",data);
-	  usartTransmit("j",1);
-	  usartTransmit("KL",2);
 	  usartTransmit("HELLO WOLRD!\n",14);*/
 
   /* USER CODE END WHILE */

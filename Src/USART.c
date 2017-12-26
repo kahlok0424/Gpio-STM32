@@ -12,13 +12,15 @@
  * Name  Pin    | Name
  * --------------------
  * Tx    PA9    | Rx
- * Rx    PA10   | Tx
+ * Rx    PA10   | Tx.
  * GND   GND    | GND
  * --------------------
  */
 
 #include<stdint.h>
 #include "USART.h"
+#include <stdio.h>
+#include <stdarg.h>
 
 void usartParityConfig(int en,int odd){
 	if(en==1){
@@ -85,4 +87,22 @@ void usartReceive(char *data){
 uint8_t usartGetData(){
 	while(usart1->SR & RXNEbit ==0);
 	return usart1->DR;
+}
+
+void serialPrint(char *format,...){
+	va_list args;
+	char *buffer;
+	int i,length;
+
+	va_start(args,format);
+
+	length = vsnprintf(buffer,0,format,args);
+	buffer = malloc(length + 1);
+	vsnprintf(buffer,length +1,format,args);
+
+	/*for(i = 0;i< length +1 ; i++){
+		usartSend(buffer[i]);
+	}*/
+	usartTransmit(buffer,length);
+	free(buffer);
 }
