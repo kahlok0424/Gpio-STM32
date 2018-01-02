@@ -30,10 +30,16 @@ void enableTimer8(void);
 void enableI2C(int value);
 void enableUSART1(void);
 void enableDMA(int dmaBitNumber);
+void enableADC(int AdcNum);
 
 //DMA
 #define DMA1_DEV	21
 #define DMA2_DEV	22
+
+//ADC
+#define ADC1bitNum	8
+#define ADC2bitNum	9
+#define ADC3bitNum	10
 
 typedef struct RccReg RccReg;
 struct RccReg{

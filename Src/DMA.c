@@ -67,14 +67,13 @@ int dmaStreamCheckFlag(DmaReg *dma , int streamNum , int flag){
 		streamNum -= 2;
 		isUpper16 = TRUE;
 	}
-
 	return *intrStatusReg & (DMA_TCIF<< ( 6* streamNum ));
 }
 
 void dmaSetAddressAndSize(uint32_t memoryAddr ,uint32_t peripheralAddr,uint32_t size){
 
 }
-}
+
 void dmaInitForTimer8(char *str){
 
 	dma2->s[2].CR &= ~(StreamEN);

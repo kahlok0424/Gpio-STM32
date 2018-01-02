@@ -53,6 +53,7 @@
 #include "Flash.h"
 #include "USART.h"
 #include "DMA.h"
+#include "ADC.h"
 #define red_led     14
 #define green_led   13
 #define blue_button 0
@@ -110,12 +111,12 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   //Output compare input capture
-  enableGpioC();
+  /*enableGpioC();
   gpioConfig(GpioC,6,GPIO_MODE_AF,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_VERY_HIGH);
   gpioConfigAltFuncNum(GpioC,6,AF3);
   configureTimer8();
   enableDMA(DMA2_DEV);
-  dmaInitForTimer8("test");
+  dmaInitForTimer8("test");*/
 
   //gpio config for usart
   /*enableGpioA();
@@ -204,13 +205,35 @@ int main(void)
   i2c3->CR1 |= (1<<0); //enable peripheral
   i2c3->CR1 |= (1<<8);*/
 
+  //ADC config
+  int test[] = {5};
+  double value;
+  double voltage1;
+  double voltage2;
+  enableADC(1);
+  enableGpio(GpioA);
+  enableGpio(GpioC);
+  gpioConfig(GpioA,5,GPIO_MODE_AN,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_VERY_HIGH);
+  gpioConfig(GpioC,3,GPIO_MODE_AN,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_VERY_HIGH);
+  ADCConfig(my_ADC1,1,RightAlignment,ADC_12bit);
+  ADCSamplingTime(my_ADC1,1,CYCLE480);
+ // ADCSamplingTime(my_ADC1,13,CYCLE480);
+  ADCSelectSequence(my_ADC1,5,1);
+ // ADCSelectSequence(my_ADC1,13,2);
+  //adcSetChannelSamplingSequence(my_ADC1, test,1);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  toggleOutCompareChannel1WithForce();
+	  ADCStartConversion(my_ADC1);
+	  voltage1 = ((ADCGetValue(my_ADC1)) *3.3)/4096;
+	  printf("Voltage (ch5) : %1.6f \n",voltage1);
+	  //ADCStartConversion(my_ADC1);
+	  //voltage2 = ((ADCGetValue(my_ADC1)) *3.3)/4096;
+	  //printf("Voltage (ch13) : %1.6f \n",voltage2);
 
 	  //usart transmit and receive
 	  /*usartReceive(data);

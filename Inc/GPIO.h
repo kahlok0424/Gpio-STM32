@@ -26,7 +26,6 @@
 #define GPIO_PUPD             0xc
 #define GPIO_ODR             0x14*/
 
-typedef struct GpioReg GpioReg;
 #define GpioA   ((GpioReg *)(GPIOA_BASE_ADR))
 #define GpioB   ((GpioReg *)(GPIOB_BASE_ADR))
 #define GpioC   ((GpioReg *)(GPIOC_BASE_ADR))
@@ -37,6 +36,7 @@ typedef struct GpioReg GpioReg;
 #define GpioH   ((GpioReg *)(GPIOH_BASE_ADR))
 #define GpioI   ((GpioReg *)(GPIOI_BASE_ADR))
 
+typedef struct GpioReg GpioReg;
 struct GpioReg{
 	volatile uint32_t mode;         //0h
 	volatile uint32_t outType;      //4h

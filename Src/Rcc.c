@@ -28,14 +28,14 @@ void enableGpioG(){
 }
 
 void enableGpioA(){
-	//un-reset gpioG
+	//un-reset gpioA
 	*rccAhb1Rst &= ~1;
 	//enable gpioG clock
 	*rccAhb1En |= 1;
 }
 
 void enableGpioC(){
-	//un-reset gpioG
+	//un-reset gpioC
 	*rccAhb1Rst &= ~(1<<2);
 	//enable gpioG clock
 	*rccAhb1En |= (1<<2);
@@ -63,4 +63,9 @@ void enableUSART1(void){
 void enableDMA(int dmaBitNumber){
 	rcc->AHB1RSTR &= ~(1<< dmaBitNumber);
 	rcc->AHB1ENR |= 1<< dmaBitNumber;
+}
+
+void enableADC(int AdcNum){
+	rcc->APB2RSTR &= ~(1<<8);
+	rcc->APB2ENR |= (1<< (7+AdcNum));
 }
