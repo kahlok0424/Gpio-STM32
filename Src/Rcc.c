@@ -71,6 +71,6 @@ void enableADC(int AdcNum){
 }
 
 void enableWWDG(){
-	rcc->APB2RSTR &= ~(1<<11);
-	rcc->APB2ENR |= (1<<11 );
+	rcc->APB1RSTR &= ~(1<<11);
+	rcc->APB1ENR |= (1<<11 );
 }

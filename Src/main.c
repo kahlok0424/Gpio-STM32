@@ -9,7 +9,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2017 STMicroelectronics
+  * COPYRIGHT(c) 2018 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -84,7 +84,7 @@ extern void initialise_monitor_handles(void);
 /* USER CODE END 0 */
 
 int main(void)
-{
+.{
 
   /* USER CODE BEGIN 1 */
   initialise_monitor_handles();
@@ -220,12 +220,25 @@ int main(void)
   ADCSamplingTime(my_ADC1,1,CYCLE480);
   ADCSelectSequence(my_ADC1,5,1);
 */
-
-  initTimer8(5000,17999);
+  printCauseOfReset();
+  rccClearAllResetFlah();
+  HAL_Delay(1000);
   enableGpio(GpioG);
   gpioConfig(GpioG,green_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
-  configIWDG(IWDG_PRS_DIV64,2000);
-  IWDGstart();
+  //IWDGstart();
+  //configIWDG(IWDG_PRS_DIV64,2000);
+  //IWDGreset();
+  int i =0;
+  enableWWDG();
+  while(i++ << 20){
+	  SET_PIN(GpioG,green_led);
+	  HAL_Delay(100);
+	  RESET_PIN(GpioG,green_led);
+	  HAL_Delay(100);
+  }
+  configWWDG(WWDG_TB_DIV2,63);
+  WWDGsetWindowValue(28);
+  WWDGstart();
 
   /* USER CODE END 2 */
 
@@ -233,9 +246,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  SET_PIN(GpioG,green_led);
-	  HAL_Delay(500);
-	  RESET_PIN(GpioG,green_led);
+	  WWDGrefreshAndReload(63);
 	  //ADC operation
 	  /*ADCStartConversion(my_ADC1);
 	  voltage1 = ((ADCGetValue(my_ADC1)) *3.3)/4096;
@@ -381,6 +392,26 @@ void EXTI0_IRQHandler(void){
 void wait500ms(void){
 	while(!(timer8->SR & 1));
 	timer8->SR &= ~1;
+}
+
+void printCauseOfReset(void){
+	printf("\nCause of reset :");
+	if(rcc->CSR & LPWRRSTF)
+		printf("\nLow Power reset");
+	if(rcc->CSR & WWDGRSTF)
+		printf("\nWindow watchdog reset");
+	if(rcc->CSR & IWDGRSTF)
+		printf("\nIndependent watchdog reset");
+	if(rcc->CSR & SFTRSTF)
+		printf("\nSofware reset");
+	if(rcc->CSR & PORRSTF)
+		printf("\nPower On  reset");
+	if(rcc->CSR & PINRSTF)
+		printf("\nNrst reset");
+	if(rcc->CSR & BORRSTF)
+		printf("\nBrown out reset");
+	/*if
+		printf("\nNever reset");*/
 }
 
 /* USER CODE END 4 */

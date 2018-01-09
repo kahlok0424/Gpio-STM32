@@ -9,7 +9,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2017 STMicroelectronics
+  * COPYRIGHT(c) 2018 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -51,6 +51,7 @@
 /* USER CODE END Private defines */
 
 void _Error_Handler(char *, int);
+void printCauseOfReset(void);
 
 #define Error_Handler() _Error_Handler(__FILE__, __LINE__)
 

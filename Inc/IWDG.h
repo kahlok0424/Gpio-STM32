@@ -48,9 +48,25 @@ struct WwdgReg{
 #define IWDG_PRS_DIV64		4
 #define IWDG_PRS_DIV128		5
 #define IWDG_PRS_DIV256		6
-#define IWDG_PRS_DIV256		7
+//#define IWDG_PRS_DIV256		7
+
+//WWDG
+#define WWDGactive	(1<<7)
+#define EWI			(1<<9)
+#define T6			(1<<6)
+
+#define WWDG_TB_DIV1		0
+#define WWDG_TB_DIV2		1
+#define WWDG_TB_DIV4		2
+#define WWDG_TB_DIV8		3
 
 void configIWDG(int presacle ,int reload);
 void IWDGstart();
+void IWDGreset();
 
+void configWWDG(int prescale ,int counter);
+void WwdgEnableInterrupt();
+void WWDGstart();
+void WWDGsetWindowValue(int value);
+void WWDGrefreshAndReload(int counter);
 #endif /* IWDG_H_ */

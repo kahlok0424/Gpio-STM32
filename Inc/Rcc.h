@@ -31,6 +31,7 @@ void enableI2C(int value);
 void enableUSART1(void);
 void enableDMA(int dmaBitNumber);
 void enableADC(int AdcNum);
+void enableWWDG();
 
 //DMA
 #define DMA1_DEV	21
@@ -95,5 +96,16 @@ struct RccReg{
 	                                (rcc->CFGR &= ~(7<<24));       \
 	                                (rcc->CFGR |= (x<<24));        \
                                   }
+
+#define  LPWRRSTF	(1<<31)
+#define  WWDGRSTF	(1<<30)
+#define  IWDGRSTF	(1<<29)
+#define  SFTRSTF	(1<<28)
+#define  PORRSTF	(1<<27)
+#define  PINRSTF	(1<<26)
+#define  BORRSTF	(1<<25)
+#define  RMVF		(1<<24)
+
+#define rccClearAllResetFlah()	rcc->CSR |= RMVF;
 
 #endif /* RCC_H_ */
