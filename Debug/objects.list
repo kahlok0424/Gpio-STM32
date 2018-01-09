@@ -17,6 +17,7 @@
 "Src/Flash.o"
 "Src/GPIO.o"
 "Src/I2C.o"
+"Src/IWDG.o"
 "Src/NVIC.o"
 "Src/RNG.o"
 "Src/Rcc.o"

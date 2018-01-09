@@ -54,6 +54,7 @@
 #include "USART.h"
 #include "DMA.h"
 #include "ADC.h"
+#include "IWDG.h"
 #define red_led     14
 #define green_led   13
 #define blue_button 0
@@ -206,7 +207,7 @@ int main(void)
   i2c3->CR1 |= (1<<8);*/
 
   //ADC config
-  int test[] = {5};
+  /*int test[] = {5};
   double value;
   double voltage1;
   double voltage2;
@@ -217,10 +218,14 @@ int main(void)
   gpioConfig(GpioC,3,GPIO_MODE_AN,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_VERY_HIGH);
   ADCConfig(my_ADC1,1,RightAlignment,ADC_12bit);
   ADCSamplingTime(my_ADC1,1,CYCLE480);
- // ADCSamplingTime(my_ADC1,13,CYCLE480);
   ADCSelectSequence(my_ADC1,5,1);
- // ADCSelectSequence(my_ADC1,13,2);
-  //adcSetChannelSamplingSequence(my_ADC1, test,1);
+*/
+
+  initTimer8(5000,17999);
+  enableGpio(GpioG);
+  gpioConfig(GpioG,green_led,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_PUPD_NO_PULL,GPIO_SPD_HIGH);
+  configIWDG(IWDG_PRS_DIV64,2000);
+  IWDGstart();
 
   /* USER CODE END 2 */
 
@@ -228,12 +233,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  ADCStartConversion(my_ADC1);
+	  SET_PIN(GpioG,green_led);
+	  HAL_Delay(500);
+	  RESET_PIN(GpioG,green_led);
+	  //ADC operation
+	  /*ADCStartConversion(my_ADC1);
 	  voltage1 = ((ADCGetValue(my_ADC1)) *3.3)/4096;
 	  printf("Voltage (ch5) : %1.6f \n",voltage1);
-	  //ADCStartConversion(my_ADC1);
-	  //voltage2 = ((ADCGetValue(my_ADC1)) *3.3)/4096;
-	  //printf("Voltage (ch13) : %1.6f \n",voltage2);
+	  */
 
 	  //usart transmit and receive
 	  /*usartReceive(data);
@@ -252,7 +259,7 @@ int main(void)
     while(!sysTickHasExpired());
     gpioWrite(GpioG,red_led,0);*/
 
-    //blink
+    //blink with button press
 /*	volatile int blue_button_state;
 
     gpioWrite(GpioG,red_led,1);
@@ -359,12 +366,12 @@ void EXTI0_IRQHandler(void){
 	buttonPress++;
 }
 
-void My_SysTick_Handler(void){
+/*void SysTick_Handler(void){
 	static int led_state =0;
 	//just do nothing but reading the CTRL register to clear the counterflag
 	volatile int flags = SysTicker->CTRL;
 	gpioWrite(GpioG,red_led, (led_state = !led_state));
-}
+}*/
 
 //Enable this for RNG
 /*void HASH_RNG_IRQHandler(void){
